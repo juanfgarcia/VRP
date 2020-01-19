@@ -1,6 +1,8 @@
 #include <fstream>
 #include <sstream>
 #include <iterator>
+#include <iostream>
+using namespace std;
 
 #ifndef STATE_H
 #include "state.hpp"
@@ -80,4 +82,22 @@ State::State(string input_file){
         this->vehicle = *new_vehicle;
         this->parent = nullptr;
     }
+}
+
+vector<State> State::move(){
+    vector<State> successors;
+    for (unsigned int vertex = 0; vertex < graph.adjacency_matrix[vehicle.position].size(); vertex++){
+        if ( graph.adjacency_matrix[vehicle.position][vertex] != -1 ){
+            State *child = new State(*this);
+            child->vehicle.position = vertex;   
+            successors.push_back(*child);
+        }
+    }
+    return successors;
+}
+
+
+vector<State> State::getSuccessors(){
+    vector<State> successors = this->move();
+    return successors;
 }

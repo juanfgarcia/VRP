@@ -14,7 +14,13 @@ int main(int argc, char **argv) {
    
     State* initial_state = new State(input_file);
 
-    initial_state->graph.print();
+    //initial_state->graph.print();
+
+    cout << initial_state->vehicle.position << endl;
+    
+    for (State state : initial_state->getSuccessors() ){
+        cout << state.vehicle.position << endl;
+    }
         
     return 0;
 }
