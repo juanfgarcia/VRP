@@ -1,11 +1,7 @@
 #include <iostream>
-#include <fstream>
 #include <string>
-#ifndef VEHICLE_H
-#include "vehicle.hpp"
-#endif
-#ifndef GRAPH_H
-#include "graph.hpp"
+#ifndef STATE_H
+#include "state.hpp"
 #endif
 using namespace std;
 
@@ -15,24 +11,10 @@ int main(int argc, char **argv) {
         return 0;
     }
     string input_file = argv[1];
-    Graph *graph;
+   
+    State* initial_state = new State(input_file);
 
-    try{
-        graph = new Graph(input_file);
-    }catch(int e){
-        if (e == 404){
-            cout << "Unable to open file " << input_file << endl; 
-            return 0;
-        }
-    }
-
-    vector<int> initial = graph->getInitial();
-    Vehicle *vehicle = new Vehicle(initial[0], initial[1]);
-
-    graph->print();
-
-
-    
-
+    initial_state->graph.print();
+        
     return 0;
 }

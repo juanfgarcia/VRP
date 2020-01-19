@@ -2,7 +2,7 @@ CC=g++
 
 CFLAGS= -Wall
 
-DEPS = graph.cpp vehicle.cpp
+DEPS = state.cpp graph.cpp vehicle.cpp
 
 MAIN = vrp
 

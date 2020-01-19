@@ -3,15 +3,13 @@ using namespace std;
 #define VEHICLE_H
 
 class Vehicle {
-    // vector with the destiny of the passengers
-    private:
+    public:
         int position;
         vector<int> deliver_vector;    
-        int capacity;
+        unsigned int capacity;
 
-    public:
-        //Constructor by parameter position and capacity
-        Vehicle(int position_, int capacity_);
+        Vehicle(){};
+        ~Vehicle(){};
 
         // Deliver all passenger in the bus whose destiny is the actual position
         void deliver(int passenger);

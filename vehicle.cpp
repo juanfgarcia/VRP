@@ -5,11 +5,6 @@ using namespace std;
 #include "vehicle.hpp"
 #endif
 
-Vehicle::Vehicle(int position_, int capacity_){
-    this->position = position_;
-    this->capacity = capacity_;
-}
-
 void Vehicle::pickup(int passenger){
     if (this->deliver_vector.size()+1 <= this->capacity){
         this->deliver_vector.push_back(passenger);
