@@ -84,6 +84,23 @@ State::State(string input_file){
     }
 }
 
+vector<State*> State::deliver(){
+    vector<State*> successors;
+    for (unsigned int i = 0; i< this->graph.deliver_spots.size(); i++){
+        if (this->vehicle.position == graph.deliver_spots[i].position){
+            for (int passenger : this->vehicle.deliver_vector){
+                if (passenger == graph.deliver_spots[i].position){
+                    State *child = new State(*this);
+                    child->vehicle.deliver(passenger);
+                    child->setParent(this);
+                    successors.push_back(parent);
+                }   
+            }
+        }
+    }
+    return successors;
+}
+
 vector<State*> State::pickup(){
     vector<State*> successors;
     for (unsigned int i = 0; i<this->graph.pickup_spots.size(); i++){
@@ -119,6 +136,9 @@ vector<State*> State::getSuccessors(){
         successors.push_back(state);
     }
     for (State *state: this->pickup()){
+        successors.push_back(state);
+    }
+    for (State *state: this->deliver()){
         successors.push_back(state);
     }
     return successors;
