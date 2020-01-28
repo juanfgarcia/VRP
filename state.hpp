@@ -12,27 +12,30 @@
 
 class State {
     private:
-        vector<State> pickup();
-        vector<State> deliver();
-        vector<State> move();
+        vector<State*> pickup();
+        vector<State*> deliver();
+        vector<State*> move();
     public:
         Vehicle vehicle;
         Graph graph;
-        const State* parent;
+        State* parent;
 
         // Constructor from a copy of it's parent
         State(const State &parent_){
             this->vehicle = parent_.vehicle;
             this->graph = parent_.graph;
-            this->parent = &parent_;
         };
+
+        void setParent(State *parent_){
+            this->parent = parent_;
+        }
         
         // Constructor from initial file (for inital state)
         State(string input_file);
         // Default destructor
         ~State(){};
 
-        vector<State> getSuccessors();
+        vector<State*> getSuccessors();
 
         void print();
 };
