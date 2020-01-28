@@ -13,13 +13,13 @@ int main(int argc, char **argv) {
     string input_file = argv[1];
    
     State* initial_state = new State(input_file);
-
-    //initial_state->graph.print();
-
-    cout << initial_state->vehicle.position << endl;
+    cout << &initial_state << endl;
     
     for (State state : initial_state->getSuccessors() ){
-        cout << state.vehicle.position << endl;
+        cout << "------------NEW STATE----------------" << endl;
+        cout << "DIR = " << &state << endl;
+        cout << "PARENT DIR = " << state.parent << endl;
+        state.print();
     }
         
     return 0;

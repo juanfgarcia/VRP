@@ -24,5 +24,8 @@ class Graph {
         Graph(){};
         // Default destructor
         ~Graph(){};
+
+        // Pickup a passenger from a pickup_spot
+        void pickup(int spot, int passenger);
         void print();
 };

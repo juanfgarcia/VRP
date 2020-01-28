@@ -1,4 +1,5 @@
 #include <algorithm>
+#include <iostream>
 using namespace std;
 
 #ifndef VEHICLE_H
@@ -15,4 +16,17 @@ void Vehicle::deliver(int passenger){
     if (passenger == position){
         this->deliver_vector.erase(remove(this->deliver_vector.begin(), this-> deliver_vector.end(), passenger));
     }
+}
+
+void Vehicle::move(int stop){
+    this->position = stop;
+}
+
+void Vehicle::print(){
+    cout << "Vehicle position : " << this->position << endl;
+    cout << "Vehicle passengers : [ " ;
+    for (int passenger : this->deliver_vector){
+        cout << passenger << " ";
+    }
+    cout << " ]" << endl;
 }

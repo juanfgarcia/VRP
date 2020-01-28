@@ -33,4 +33,6 @@ class State {
         ~State(){};
 
         vector<State> getSuccessors();
+
+        void print();
 };

@@ -15,5 +15,9 @@ class Vehicle {
         void deliver(int passenger);
         // Pickup a passenger
         void pickup(int passenger);
+        // Move to 'stop'
+        void move(int stop);
+
+        void print();
 };
 

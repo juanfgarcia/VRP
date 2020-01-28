@@ -84,20 +84,47 @@ State::State(string input_file){
     }
 }
 
+vector<State> State::pickup(){
+    vector<State> successors;
+    for (unsigned int i = 0; i<this->graph.pickup_spots.size(); i++){
+        if (this->vehicle.position == graph.pickup_spots[i].position){
+            for (int passenger : graph.pickup_spots[i].passengers){
+                State *child = new State(*this);
+                child->graph.pickup(i, passenger);
+                child->vehicle.pickup(passenger);
+                successors.push_back(*child);
+            }
+        }
+    }
+    return successors;
+}
+
 vector<State> State::move(){
     vector<State> successors;
     for (unsigned int vertex = 0; vertex < graph.adjacency_matrix[vehicle.position].size(); vertex++){
         if ( graph.adjacency_matrix[vehicle.position][vertex] != -1 ){
             State *child = new State(*this);
-            child->vehicle.position = vertex;   
+            child->vehicle.move(vertex);   
             successors.push_back(*child);
         }
     }
     return successors;
 }
 
-
 vector<State> State::getSuccessors(){
-    vector<State> successors = this->move();
-    return successors;
+    vector<State> successors;
+    for (State state: this->move()){
+        successors.push_back(state);
+    }
+    for (State state: this->pickup()){
+        successors.push_back(state);
+    }
+
+    return successors;  
+
+}
+
+void State::print(){
+    this->graph.print();
+    this->vehicle.print();
 }

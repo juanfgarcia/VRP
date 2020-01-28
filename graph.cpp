@@ -6,6 +6,18 @@
 #include "graph.hpp"
 #endif
 
+
+void Graph::pickup(int spot, int passenger){
+    vector<int> passengers_ = pickup_spots[spot].passengers;
+    for (auto i = passengers_.begin() ; i != passengers_.end(); i++ ){
+        if (*i == passenger){
+            passengers_.erase(i);
+            break;
+        }
+    }
+    this->pickup_spots[spot].passengers = passengers_;
+}
+
 void Graph::print(){
     for (auto row : adjacency_matrix){
         for (auto element : row){
@@ -28,3 +40,5 @@ void Graph::print(){
         cout << ", Earliest start: " << ps.earlier_start << endl;
     }
 }
+
+
