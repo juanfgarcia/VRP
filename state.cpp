@@ -148,3 +148,16 @@ void State::print(){
     this->graph.print();
     this->vehicle.print();
 }
+
+bool State::isGoal(){
+    bool isGoal = 1;
+    if (!this->vehicle.deliver_vector.empty()) isGoal = 0;
+    if (!this->vehicle.position == 0) isGoal = 0;
+    for(pickup_spot ps : this->graph.pickup_spots){
+        if (!ps.passengers.empty()){
+            isGoal = 0;
+            break;
+        }
+    }
+    return isGoal;
+}
