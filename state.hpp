@@ -19,6 +19,7 @@ class State {
         Vehicle vehicle;
         Graph graph;
         State* parent;
+        int f, g, h;
 
         // Constructor from a copy of it's parent
         State(const State &parent_){
@@ -37,6 +38,7 @@ class State {
 
         vector<State*> getSuccessors();
         bool isGoal();
+        int heuristic(State *state);
 
         void print();
 };

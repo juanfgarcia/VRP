@@ -14,5 +14,9 @@ int main(int argc, char **argv) {
    
     State* initial_state = new State(input_file);   
 
+    for (State* state : initial_state->getSuccessors()){
+        cout << state->f << endl;
+    }
+    
     return 0;
 }

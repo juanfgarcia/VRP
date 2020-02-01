@@ -80,19 +80,26 @@ State::State(string input_file){
 
         this->graph = *new_graph;
         this->vehicle = *new_vehicle;
+        this-> f = 0;
+        this-> g = 0;
         this->parent = nullptr;
     }
 }
 
+// Deliver action
 vector<State*> State::deliver(){
     vector<State*> successors;
+    // For each delivery spot in the graph, check if we are placed in one
     for (unsigned int i = 0; i< this->graph.deliver_spots.size(); i++){
         if (this->vehicle.position == graph.deliver_spots[i].position){
+            // For each passenger to deliver generate a new node
             for (int passenger : this->vehicle.deliver_vector){
                 if (passenger == graph.deliver_spots[i].position){
                     State *child = new State(*this);
                     child->vehicle.deliver(passenger);
                     child->setParent(this);
+                    // Set child's f to parent's g+1 + h(child)
+                    child->f = this->g + 1 + heuristic(child);
                     successors.push_back(parent);
                 }   
             }
@@ -101,15 +108,20 @@ vector<State*> State::deliver(){
     return successors;
 }
 
+// Pickup action
 vector<State*> State::pickup(){
     vector<State*> successors;
+    // For each pickup spot in the graph check if we are placed in one
     for (unsigned int i = 0; i<this->graph.pickup_spots.size(); i++){
         if (this->vehicle.position == graph.pickup_spots[i].position){
+            // For each passenger in the pickup spot generate a new child
             for (int passenger : graph.pickup_spots[i].passengers){
                 State *child = new State(*this);
                 child->graph.pickup(i, passenger);
                 child->vehicle.pickup(passenger);
                 child->setParent(this);
+                // Set child's f to parent's g+1 + h(child)
+                child->f = this->g+1 + heuristic(child); 
                 successors.push_back(child);
             }
         }
@@ -117,13 +129,18 @@ vector<State*> State::pickup(){
     return successors;
 }
 
+// Move action
 vector<State*> State::move(){
     vector<State*> successors;
+    // Check adjacents vertex in graph
     for (unsigned int vertex = 0; vertex < graph.adjacency_matrix[vehicle.position].size(); vertex++){
-        if ( graph.adjacency_matrix[vehicle.position][vertex] != -1 ){
+        if (graph.adjacency_matrix[vehicle.position][vertex] != -1 ){
             State *child = new State(*this);
             child->vehicle.move(vertex);
-            child->setParent(this);   
+            child->setParent(this);
+            // Set child's f to parent's g + cost of moving  + h(child)
+            int cost = graph.adjacency_matrix[vehicle.position][vertex];
+            child->f = this->g + cost + heuristic(child);  
             successors.push_back(child);
         }
     }
@@ -160,4 +177,8 @@ bool State::isGoal(){
         }
     }
     return isGoal;
+}
+
+int State::heuristic(State *state){
+    return 0;
 }
